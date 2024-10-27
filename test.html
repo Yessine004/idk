@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: transparent;
+            color: white;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+            transition: background-color 0.3s ease, padding 0.3s ease;
+            border-bottom-left-radius: 40%;
+            border-bottom-right-radius: 40%;
+        }
+
+        .sticky {
+            background-color: rgba(58, 49, 49, 0.315);
+            color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 5%;
+        }
+
+        .logo img {
+            width: 80px;
+            height: auto;
+        }
+
+        .btns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btns a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .btns a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: red;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .btns a:hover {
+            color: red;
+        }
+
+        .btns a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        section.banner {
+            background-image: url('./assets/banner.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        section.banner h2 {
+            font-size: 34px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        section.banner h1 {
+            font-size: 72px;
+            margin: 0;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        section.banner h1 > span {
+            color: red;
+        }
+
+        section.banner p {
+            font-size: 18px;
+            margin: 0 0 20px;
+            max-width: 600px;
+        }
+
+        .join-button {
+            background-color: transparent;
+            color: red;
+            border: 2px solid red;
+            padding: 10px 20px;
+            width: 150px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: red;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        section.features {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 100px;
+            align-items: center;
+            background-color: #000000;
+            color: white;
+            height: 100vh;
+            padding: 50px 5%;
+        }
+
+        .features-title {
+            font-size: 36px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .feature-text {
+            display: none;
+            font-size: 14px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .svg-container img {
+            width: 80px;
+            height: auto;
+            max-width: 100%;
+        }
+
+        .more-button {
+            display: none;
+            background-color: transparent;
+            color: red;
+            border: 2px solid red;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .more-button:hover {
+            background-color: red;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        @media (min-width: 769px) {
+            .feature-text {
+                display: block;
+            }
+            .more-button {
+                display: block;
+            }
+        }
+
+        main {
+            padding: 50px;
+            text-align: center;
+        }
+
+        section.offer {
+            height: 100vh;
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            align-items: center;
+            background-image: url('./assets/offer.png'); /* Background image for Offer section */
+            background-size: cover; /* Cover the whole section */
+            color: white;
+            padding: 50px 5%;
+        }
+
+        .offer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 0, 0, 0.8); /* Light red background */
+            border-radius: 10px;
+            padding: 20px;
+            height: 80%; /* Adjust height */
+            width: 30%; /* Adjust width */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .offer-item img {
+            max-width: 100%; /* Responsive image */
+            border-radius: 10px;
+        }
+
+        .offer-item p {
+            margin-top: 10px; /* Spacing */
+            text-align: center;
+        }
+
+        /* New rectangle for the additional offer */
+        .additional-offer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            height: 80%; /* Adjust height */
+            width: 30%; /* Adjust width */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        section.about {
+            display: flex;
+            background-color: black; /* Black background for About section */
+            color: white; /* White text color */
+            padding: 50px 5%; /* Responsive padding */
+            height: 100vh; /* Set height for the About section */
+            align-items: center;
+        }
+
+        .about-image {
+            flex: 1; /* Take up half the space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-image img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .about-text {
+            flex: 1; /* Take up half the space */
+            padding: 20px;
+            text-align: left; /* Align text to the left */
+        }
+
+        .about-text h1 {
+            color: red; /* Red text for heading */
+            text-transform: uppercase; /* Uppercase text */
+            margin-bottom: 15px; /* Spacing */
+        }
+
+        .about-text p {
+            margin-bottom: 20px; /* Spacing */
+        }
+
+        .about-button {
+            background-color: red; /* Button color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .about-button:hover {
+            background-color: darkred; /* Darker red on hover */
+            transform: scale(1.05);
+        }
+
+        section.contact {
+            height: auto; /* Auto height for contact section */
+            background-color: black; /* New section's background color */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            padding: 50px 5%; /* Padding for contact section */
+        }
+
+        .contact-form {
+            width: 80%; /* 80% width of the section */
+            max-width: 600px; /* Maximum width */
+            background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 10px;
+            border: 2px solid red; /* Red border */
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: darkred; /* Dark red on focus */
+            outline: none;
+        }
+
+        .contact-form button {
+            background-color: red; /* Button color */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: darkred; /* Darker red on hover */
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: red;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 5%;
+            }
+
+            .btns {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            section.banner h1 {
+                font-size: 48px;
+            }
+
+            section.banner h2 {
+                font-size: 24px;
+            }
+
+            section.banner p {
+                font-size: 14px;
+            }
+
+            .svg-container {
+                gap: 20px;
+            }
+
+            section.about {
+                flex-direction: column; /* Stack elements on smaller screens */
+                height: auto; /* Allow height to adjust */
+                padding: 20px 5%; /* Responsive padding */
+            }
+
+            .about-image,
+            .about-text {
+                flex: 1; /* Each takes full width on small screens */
+            }
+
+            section.offer {
+                flex-direction: column; /* Stack items on smaller screens */
+                align-items: center; /* Center align */
+            }
+
+            .offer-item,
+            .additional-offer {
+                width: 80%; /* Full width on small screens */
+                margin-bottom: 20px; /* Spacing between items */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="logo">
+            <img src="./assets/Activ.png" alt="Logo">
+        </div>
+        <div class="hamburger" id="hamburger">
+            &#9776; <!-- Hamburger icon -->
+        </div>
+        <nav class="btns" id="nav">
+            <a href="#banner">Header</a>
+            <a href="#features">Features</a>
+            <a href="#offer">Offer</a> <!-- Link to Offer section -->
+            <a href="#about">About</a> <!-- Link to About section -->
+            <a href="#contact">Contact</a> <!-- Link to Contact section -->
+        </nav>
+    </header>
+
+    <section class="banner" id="banner">
+        <h2>STEP UP YOUR</h2>
+        <h1><span>FITNESS</span> WITH US</h1>
+        <p>Build your body and fitness with a professional touch.</p>
+        <button class="join-button" onclick="location.href='#offer'">Join Us</button>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="features-title">Features</h2>
+        
+        <div class="svg-container">
+            <div class="feature-item">
+                <img src="./assets/1.svg" alt="Feature 1">
+                <div class="feature-text">Feature 1 description goes here. <br> It highlights the benefits and details.</div>
+                <button class="more-button">Savoir Plus...</button>
+            </div>
+            <div class="feature-item">
+                <img src="./assets/2.svg" alt="Feature 2">
+                <div class="feature-text">Feature 2 description goes here. <br> It highlights the benefits and details.</div>
+                <button class="more-button">Savoir Plus...</button>
+            </div>
+            <div class="feature-item">
+                <img src="./assets/3.svg" alt="Feature 3">
+                <div class="feature-text">Feature 3 description goes here. <br> It highlights the benefits and details.</div>
+                <button class="more-button">Savoir Plus...</button>
+            </div>
+            <div class="feature-item">
+                <img src="./assets/4.svg" alt="Feature 4">
+                <div class="feature-text">Feature 4 description goes here. <br> It highlights the benefits and details.</div>
+                <button class="more-button">Savoir Plus...</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="offer" id="offer">
+        <div class="offer-item">
+            <p>Offer 1 description goes here.</p>
+        </div>
+        <div class="offer-item">
+            <p>Offer 2 description goes here.</p>
+        </div>
+        <div class="offer-item">
+            <p>Offer 3 description goes here.</p>
+        </div>
+        <div class="additional-offer">
+            <p>Offer 4 description goes here.</p>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="about-image">
+            <img src="./assets/about.png" alt="About Us">
+        </div>
+        <div class="about-text">
+            <h1>Learn More About Us</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in lectus sit amet odio volutpat fermentum. Praesent malesuada dolor sit amet eros vehicula, nec tempus nisi gravida.</p>
+            <button class="about-button" onclick="location.href='#offer'">Discover More</button>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you!</p>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="4" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>Contact Us:</p>
+        <p>
+            Phone: +123 456 7890 | 
+            Email: <a href="mailto:info@example.com">info@example.com</a> | 
+            WhatsApp: <a href="https://wa.me/1234567890">Chat with us</a>
+        </p>
+        <p>
+            Follow us: 
+            <a href="https://facebook.com">Facebook</a> | 
+            <a href="https://instagram.com">Instagram</a>
+        </p>
+    </footer>
+
+    <script>
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 0) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
+            }
+        });
+
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const nav = document.getElementById('nav');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.flexDirection = 'column';
+                nav.style.position = 'absolute';
+                nav.style.top = '70px';
+                nav.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                nav.style.width = '100%';
+                nav.style.zIndex = '10';
+            }
+        });
+    </script>
+</body>
+</html>
